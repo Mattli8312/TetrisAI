@@ -1,7 +1,7 @@
 function Empty_tile(i,j){
     let tile = document.createElement('div')
     tile.style.background = "white"
-    tile.style.border = "solid 1px black"
+    tile.style.border = "solid 2px black"
     tile.style.width = tile.style.height = tile_width;
     tile.setAttribute('id', i + ',' + j)
     tile.setAttribute('filled', "false")
@@ -138,7 +138,26 @@ function Update_Board(){
             break;
         }
     }
+    let row_counter = 1;
     while(cleared_rows.length){
+        if(cleared_rows.length > 1 && cleared_rows[0]-cleared_rows[1] == 1)
+            row_counter++
+        else{
+            switch(row_counter){
+                case 1: 
+                    score += 40
+                    break
+                case 2: 
+                    score += 100
+                    break
+                case 3: 
+                    score += 300
+                    break
+                case 4:
+                    score += 1200
+                    break
+            }
+        }
         Clear_Row(cleared_rows[cleared_rows.length-1])
         cleared_rows.pop()
     }
@@ -150,12 +169,12 @@ function Update_Board(){
     }
 }
 
-function initialize_grid(){
-    Grid.style.width = tile_width * 10;
-    Grid.style.height = innerHeight * 0.9
-    for(var a = 0; a < 20; a++){
-        for(var b = 0; b < 10; b++){
-            Empty_tile(a,b)
-        }
+function Drop_Piece(){
+    let temp = curr_piece
+    let temp_y = curr_y 
+    while(!Collided(temp, curr_x, temp_y)){
+        temp_y ++
     }
+    clear_Piece()
+    curr_y = temp_y 
 }

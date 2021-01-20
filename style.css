@@ -5,6 +5,25 @@
 }
 body{
     background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#Title{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 5vh;
+    padding: 1vh;
+    align-items: center
+}
+#navbar{
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3vh;
 }
 #grid{
     display: flex;
