@@ -1,11 +1,12 @@
-function Empty_tile(i,j){
+function Empty_tile(i,j,element){
     let tile = document.createElement('div')
     tile.style.background = "white"
     tile.style.border = "solid 2px black"
     tile.style.width = tile.style.height = tile_width;
     tile.setAttribute('id', i + ',' + j)
     tile.setAttribute('filled', "false")
-    Grid.appendChild(tile)
+    let result = document.getElementById(element)
+    result.appendChild(tile)
 }
 
 function Render_Piece(){
@@ -18,6 +19,14 @@ function Render_Piece(){
             }
             else if(tile != undefined && tile.getAttribute('filled') == "false"){
                 tile.style.background = "white"
+            }
+        }
+    }
+    for(var a = 0; a < next_piece[0].length; a++){
+        for(var b = 0; b < next_piece[0].length; b++){
+            let next = document.getElementById('n'+a+','+b)
+            if(next_piece[0][a][b]){
+                next.style.background = next_color
             }
         }
     }
@@ -138,6 +147,12 @@ function Update_Board(){
             break;
         }
     }
+    for(var a = 0; a < next_piece[0].length; a++){
+        for(var b = 0; b < next_piece[0].length; b++){
+            let tile = document.getElementById('n'+a+','+b)
+            tile.style.background = "white"
+        }
+    }
     let row_counter = 1;
     while(cleared_rows.length){
         if(cleared_rows.length > 1 && cleared_rows[0]-cleared_rows[1] == 1)
@@ -177,4 +192,75 @@ function Drop_Piece(){
     }
     clear_Piece()
     curr_y = temp_y 
+}
+
+function Hold_Piece(){
+    if(document.getElementById('h0,0').getAttribute('holding') == undefined){
+        held_piece = ref_piece
+        held_color = color 
+        document.getElementById('h0,0').setAttribute('holding', "true")
+        Update_Pieces()
+        for(var a = 0; a < next_piece[0].length; a++){
+            for(var b = 0; b < next_piece[0].length; b++){
+                let tile = document.getElementById('n'+a+','+b)
+                tile.style.background = "white"
+            }
+        }
+        New_Piece()
+    }
+    else{
+        for(var a = 0; a < held_piece[0].length; a++){
+            for(var b = 0; b < held_piece[0].length; b++){
+                let tile = document.getElementById('h'+a+','+b)
+                tile.style.background = "white"
+            }
+        }
+        let temp_piece = held_piece 
+        let temp_color = held_color 
+        held_piece = ref_piece
+        held_color = color
+        ref_piece = temp_piece 
+        color = temp_color 
+        curr_piece = ref_piece[selected]
+    }
+    for(var a = 0; a < held_piece[0].length; a++){
+        for(var b = 0; b < held_piece[0].length; b++){
+            let tile = document.getElementById('h'+a+','+b)
+            if(held_piece[0][a][b]){
+                tile.style.background = held_color
+            }
+            else{
+                tile.style.background = "white"
+            }
+        }
+    }
+}
+
+function New_Piece(){
+    switch(Math.floor(Math.random() * 3)){
+        case 0:
+            next_piece = I_piece
+            next_color = "#1CB5F5"
+            break;
+        case 1:
+            next_piece = J_piece
+            next_color = "#0750FE"
+            break;
+        case 2:
+            next_piece = L_piece 
+            next_color = "#FE7007"
+    }
+}
+
+function Update_Pieces(){
+    curr_piece = next_piece[selected]
+    ref_piece = next_piece
+    color = next_color;
+    curr_y = 0
+    curr_x = 4
+}
+
+function New_Score(){
+    let element = document.getElementById("Score")
+    element.innerHTML = "Score: " + score
 }
