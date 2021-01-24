@@ -139,6 +139,7 @@ function Update_Board(){
         }
         if(count == 10){
             cleared_rows.push(a)
+            cleared ++
         }
         else if(count > 0){
             uncleared_rows.push(a)
@@ -160,16 +161,16 @@ function Update_Board(){
         else{
             switch(row_counter){
                 case 1: 
-                    score += 40
+                    score += 40 * lvl
                     break
                 case 2: 
-                    score += 100
+                    score += 100 * lvl
                     break
                 case 3: 
-                    score += 300
+                    score += 300 * lvl
                     break
                 case 4:
-                    score += 1200
+                    score += 1200 * lvl
                     break
             }
         }
@@ -237,7 +238,7 @@ function Hold_Piece(){
 }
 
 function New_Piece(){
-    switch(Math.floor(Math.random() * 3)){
+    switch(Math.floor(Math.random() * 7)){
         case 0:
             next_piece = I_piece
             next_color = "#1CB5F5"
@@ -249,6 +250,23 @@ function New_Piece(){
         case 2:
             next_piece = L_piece 
             next_color = "#FE7007"
+            break;
+        case 3:
+            next_piece = T_piece 
+            next_color = "#8C53D5"
+            break;
+        case 4:
+            next_piece = S_piece 
+            next_color = "#08A91B"
+            break;
+        case 5:
+            next_piece = O_piece 
+            next_color = "#F8F006"
+            break;
+        case 6:
+            next_piece = Z_piece 
+            next_color = "#BD1409"
+            break;
     }
 }
 
@@ -263,4 +281,12 @@ function Update_Pieces(){
 function New_Score(){
     let element = document.getElementById("Score")
     element.innerHTML = "Score: " + score
+    if(cleared >= lvl * 10){
+        cleared = 0;
+        lvl ++
+        console.log(lvl)
+        if(ticks > 10){
+            ticks -= 5;
+        }
+    }
 }

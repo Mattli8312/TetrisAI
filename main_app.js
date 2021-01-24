@@ -1,8 +1,8 @@
 const Grid = document.getElementById('grid')
 const tile_width = innerHeight * 0.8 * 0.05
 
-let ticks = 48, layers = 10;
-let selected = 0, cleared = 0;
+let ticks = 48, lvl;
+let selected = 0, cleared;
 let curr_piece, ref_piece;
 let held_piece, next_piece;
 let color, next_color;
@@ -46,7 +46,10 @@ function clear_grid(){
 }
 function new_game(){
     game_status = 1;
+    lvl = 1;
+    cleared = 0;
     score = 0;
+    ticks = 48;
     document.getElementById('held').setAttribute('helded', 'false')
     clear_grid()
     initialize_grid()
